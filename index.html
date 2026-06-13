@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portfolio Y2K _</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="desktop" id="desktop">
+        <!-- Raccourcis -->
+        <button class="shortcut" data-scroll-to="win-cv">
+            <span class="icon" aria-hidden="true">📁</span>
+            <span>Projets.exe</span>
+        </button>
+
+        <button class="shortcut" data-scroll-to="win-cv">
+            <span class="icon" aria-hidden="true">📝</span>
+            <span>CV.txt</span>
+        </button>
+
+        <button class="shortcut" data-scroll-to="win-contact">
+            <span class="icon" aria-hidden="true">📧</span>
+            <span>Contact.exe</span>
+        </button>
+
+        <button class="shortcut" data-scroll-to="win-liens">
+            <span class="icon" aria-hidden="true">🌐</span>
+            <span>Liens.lnk</span>
+        </button>
+
+        <!-- Les fenêtres sont injectées ici par script.js -->
+    </div>
+
+    <!-- BARRE DES TACHES -->
+    <div class="taskbar">
+        <button class="start-button" data-scroll-to="win-cv">
+            <span aria-hidden="true">💾</span> <strong>Démarrer</strong>
+        </button>
+        <div class="taskbar-items" id="taskbar-items">
+            <!-- Les items sont injectés par script.js -->
+        </div>
+        <div class="clock" id="retro-clock">19:00</div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
