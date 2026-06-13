@@ -21,7 +21,6 @@ export class Icons {
         const ico = document.createElement('div');
         ico.className = `icon ${this.extraClass}`.trim();
         ico.id = this.id;
-        console.log(this.iconUrl);
         ico.innerHTML = `
             <button class="shortcut" data-scroll-to="win-cv">
                 <span class="icon" aria-hidden="true">
