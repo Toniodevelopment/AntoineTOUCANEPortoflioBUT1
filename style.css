@@ -1,5 +1,5 @@
 @font-face {
-    font-family: "Msw98UI - reg";
+    font-family: "Msw98UI";
     src: url("fonts/MSW98UI-Regular.ttf");
 }
 
@@ -7,7 +7,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Msw98UI - reg";
+    font-family: "Msw98UI", "Courier New", monospace;
     font-weight: bold;
 }
 
@@ -16,112 +16,154 @@ html, body {
     min-height: 100dvh;
     max-height: 100dvh;
     min-width: 100vw;
-    max-width: 100vw;
-    margin: 0;
-    padding: 0;
-    position: relative;
+    overflow: hidden;
 }
 
 body {
-    padding-bottom: 50px;
-}
-
-a, button, .shortcut, .start-button, .title-bar-controls button {
-    cursor: pointer;
-}
-
-/* --- BUREAU --- */
-.desktop {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    min-height: calc(100dvh - 50px);
+    padding-bottom: 40px;
     position: relative;
 }
-.icon {
+
+/* ===================== BUREAU ===================== */
+.desktop {
+    width: 100vw;
+    height: calc(100dvh - 40px);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 18px 14px;
+    overflow: hidden;
+}
+
+.icon-wrapper {
     width: fit-content;
 }
 
 .shortcut {
-    width: 80px;
-    text-align: center;
-    color: white;
-    text-shadow: 1px 1px 1px black;
-    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 76px;
     background: none;
-    border: none;
-    width: fit-content;
+    border: 1px solid transparent;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000, -1px -1px 2px #000;
+    font-size: 11px;
+    cursor: pointer;
+    padding: 4px;
+    gap: 4px;
+    transition: border-color 0.05s;
 }
 
-.shortcut .icon {
-    font-size: 32px;
-    margin-bottom: 5px;
+.shortcut:hover,
+.shortcut:focus {
+    background: rgba(0, 0, 128, 0.4);
+    border-color: rgba(255,255,255,0.5);
+    outline: none;
+}
+
+.shortcut.selected {
+    background: rgba(0, 0, 128, 0.6);
+    border: 1px dotted #fff;
+}
+
+.shortcut .icon-img {
     display: block;
+    width: 36px;
+    height: 36px;
 }
 
-.shortcut:hover .icon,
-.shortcut:focus .icon {
-    filter: hue-rotate(90deg);
+.shortcut .icon-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
 }
 
-.shortcut:focus-visible {
-    outline: 2px dotted #fff;
-    outline-offset: 2px;
+.icon-label {
+    text-align: center;
+    word-break: break-word;
+    line-height: 1.2;
+    font-size: 11px;
 }
 
-/* --- FENETRES --- */
+/* ===================== FENÊTRES ===================== */
 .window {
     background: #c0c0c0;
     border: 2px solid;
     border-color: #fff #808080 #808080 #fff;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    margin: 0 auto;
-    width: 100%;
-    min-width: 600px;
-    width: 60%;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
     position: absolute;
+    width: 580px;
+    max-width: calc(100vw - 10px);
+    overflow: hidden;
 }
 
-.window.closed {
-    display: none;
+.window.window-opening {
+    animation: winOpen 0.12s ease-out;
 }
 
+@keyframes winOpen {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.window.window-closing {
+    animation: winClose 0.12s ease-in forwards;
+}
+
+@keyframes winClose {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.92); }
+}
+
+.window.win-maximized {
+    border-width: 0 !important;
+}
+
+/* ===================== BARRE DE TITRE ===================== */
 .title-bar {
-    background: linear-gradient(90deg, #000080, #1084d0);
-    color: white;
-    padding: 4px 6px;
+    background: linear-gradient(90deg, #7b7b7b, #b0b0b0);
+    color: #d0d0d0;
+    padding: 3px 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 13px;
+    font-size: 12px;
     cursor: move;
     user-select: none;
     touch-action: none;
+    gap: 6px;
 }
 
-.window.dragging {
-    position: fixed;
-    margin: 0;
-    z-index: 1000;
-    max-width: 600px;
+.window.win-active .title-bar {
+    background: linear-gradient(90deg, #000080, #1084d0);
+    color: #fff;
 }
 
-.window.dragging .window-body {
-    max-height: 70dvh;
-    overflow-y: auto;
+.title-icon {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    flex-shrink: 0;
 }
 
 .title-bar-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: 6px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .title-bar-controls {
     display: flex;
-    gap: 3px;
+    gap: 2px;
     flex-shrink: 0;
 }
 
@@ -134,60 +176,67 @@ a, button, .shortcut, .start-button, .title-bar-controls button {
     font-size: 10px;
     font-weight: bold;
     color: #000;
-    padding: 0;
+    padding: 0 2px;
     line-height: 1;
+    cursor: pointer;
 }
 
 .title-bar-controls button:active {
     border-color: #5a5a5a #fff #fff #5a5a5a;
+    transform: translateY(1px);
 }
 
-.title-bar-controls button:focus-visible,
-.start-button:focus-visible,
-a:focus-visible {
+.title-bar-controls button:focus-visible {
     outline: 2px dotted #000;
-    outline-offset: 1px;
+}
+
+/* ===================== CORPS DE FENÊTRE ===================== */
+.window-body {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #000;
+    overflow-y: auto;
+    max-height: 65vh;
 }
 
 .window-body.collapsed {
     display: none;
 }
 
-.window-body {
-    padding: 15px;
-    font-size: 14px;
-    color: #000;
-}
-
 .loading-text {
     color: #555;
     font-style: italic;
+    font-weight: normal;
 }
 
 .window-body h1 {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 10px;
     color: #000;
 }
 
 .window-body h2 {
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #000080;
-    border-bottom: 1px solid #808080;
-    padding-bottom: 2px;
+    font-size: 13px;
+    margin: 16px 0 8px;
+    color: #000;
+    border-bottom: 2px solid #808080;
+    padding-bottom: 3px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .window-body p {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     color: #222;
-    line-height: 1.5;
+    line-height: 1.55;
+    font-weight: normal;
 }
 
 .window-body a {
     color: #000080;
     text-decoration: underline;
 }
+
 .window-body a:visited { color: #800080; }
 
 .fieldset {
@@ -195,20 +244,63 @@ a:focus-visible {
     border-color: #808080 #fff #fff #808080;
     background: #fff;
     padding: 10px;
-    margin-top: 10px;
-    min-height: 100px;
-    line-height: 1.6;
+    margin-top: 6px;
+    min-height: 60px;
+    line-height: 1.7;
+    font-weight: normal;
+    font-size: 12px;
 }
 
 .fieldset-flat {
     min-height: auto;
 }
 
-/* --- GRILLE PROJETS --- */
+/* ===================== BARRES DE COMPÉTENCES ===================== */
+.skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skill-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skill-label {
+    font-size: 11px;
+    width: 90px;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.skill-bar {
+    flex: 1;
+    height: 12px;
+    background: #d4d0c8;
+    border: 1px solid;
+    border-color: #808080 #fff #fff #808080;
+    overflow: hidden;
+}
+
+.skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #000080, #1084d0);
+    transition: width 1s ease-out;
+}
+
+.skill-pct {
+    font-size: 11px;
+    width: 32px;
+    flex-shrink: 0;
+}
+
+/* ===================== GRILLE PROJETS ===================== */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 10px;
 }
 
 .project-card {
@@ -216,62 +308,68 @@ a:focus-visible {
     border-color: #fff #808080 #808080 #fff;
     background: #d4d0c8;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .project-card h3 {
-    font-size: 14px;
+    font-size: 13px;
     color: #000080;
-    margin-bottom: 6px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .project-card p {
     font-size: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 0;
+    font-weight: normal;
+    flex: 1;
 }
 
 .project-card .badge-row {
     display: flex;
     gap: 4px;
     flex-wrap: wrap;
-    margin-bottom: 8px;
 }
 
 .project-card .badge {
     background: #000080;
     color: #fff;
     font-size: 10px;
-    padding: 2px 5px;
-    border: 1px solid #fff;
+    padding: 1px 5px;
+    border: 1px solid #0000aa;
 }
 
 .btn-95 {
     background: #c0c0c0;
     border: 2px solid;
     border-color: #fff #5a5a5a #5a5a5a #fff;
-    padding: 4px 10px;
+    padding: 3px 10px;
     font-size: 12px;
     color: #000;
     display: inline-block;
     text-decoration: none !important;
+    cursor: pointer;
+    align-self: flex-start;
 }
 
 .btn-95:active {
     border-color: #5a5a5a #fff #fff #5a5a5a;
+    transform: translateY(1px);
 }
 
-/* --- FORMULAIRE CONTACT --- */
+/* ===================== FORMULAIRE CONTACT ===================== */
 .form-row {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
     font-size: 12px;
 }
 
 .form-row label {
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .form-row input,
@@ -279,10 +377,11 @@ a:focus-visible {
     border: 2px solid;
     border-color: #808080 #fff #fff #808080;
     background: #fff;
-    padding: 5px;
+    padding: 4px 6px;
     font-size: 12px;
     font-weight: normal;
     font-family: "Courier New", monospace;
+    resize: vertical;
 }
 
 .form-row input:focus,
@@ -290,23 +389,37 @@ a:focus-visible {
     outline: 2px dotted #000080;
 }
 
-/* --- LIENS BUREAU (RESEAUX) --- */
+.form-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.form-status {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: normal;
+    min-height: 1.4em;
+}
+
+/* ===================== LIENS ===================== */
 .links-window .window-body {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .link-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     border: 1px solid #808080;
-    padding: 6px;
+    padding: 8px 10px;
     background: #fff;
     text-decoration: none;
     color: #000;
     font-size: 13px;
+    transition: background 0.08s, color 0.08s;
 }
 
 .link-row:hover {
@@ -314,7 +427,269 @@ a:focus-visible {
     color: #fff;
 }
 
-/* --- BARRE DES TACHES --- */
+.link-row > span:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.link-row strong { font-size: 13px; }
+.link-row small  { font-size: 11px; font-weight: normal; opacity: 0.8; }
+
+/* ===================== COMPTEUR DE VISITES ===================== */
+.visit-counter {
+    display: inline-flex;
+    background: #000;
+    color: #0f0;
+    font-family: "Courier New", monospace;
+    border: 2px inset #808080;
+    padding: 3px 8px;
+    letter-spacing: 3px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+hr.dotted {
+    border: none;
+    border-top: 2px dotted #808080;
+    margin: 22px 0;
+}
+
+/* ===================== CV LAYOUT ===================== */
+.cv-header {
+    background: linear-gradient(90deg, #000080, #1084d0);
+    color: #fff;
+    padding: 10px 14px;
+    margin: -12px -14px 12px;
+}
+
+.cv-header-name {
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.cv-header-name strong {
+    font-size: 26px;
+    letter-spacing: 2px;
+}
+
+.cv-header-sub {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-top: 4px;
+    font-weight: normal;
+}
+
+.cv-header-contact {
+    font-size: 10px;
+    font-weight: normal;
+    margin-top: 5px;
+    opacity: 0.9;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+}
+
+.cv-header-contact a {
+    color: #acd4f5;
+    text-decoration: underline;
+}
+
+.cv-header-sep {
+    opacity: 0.5;
+}
+
+.cv-columns {
+    display: grid;
+    grid-template-columns: 1fr 195px;
+    gap: 14px;
+    align-items: start;
+}
+
+.cv-col-left,
+.cv-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Contact */
+.cv-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cv-contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 1.4;
+}
+
+.cv-contact-row span:first-child {
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+}
+
+.cv-contact-row a {
+    color: #000080;
+    text-decoration: underline;
+    font-size: 11px;
+    word-break: break-all;
+}
+
+/* Langues */
+.cv-lang-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 7px;
+}
+
+.cv-lang-name {
+    width: 62px;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.cv-lang-level {
+    width: 26px;
+    font-size: 11px;
+    color: #4a4a4a;
+    flex-shrink: 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.cv-lang-row .skill-bar {
+    flex: 1;
+    height: 10px;
+}
+
+.cv-lang-note {
+    font-size: 11px;
+    font-weight: normal;
+    color: #555;
+    margin-top: -4px;
+    margin-bottom: 7px;
+    padding-left: 94px;
+    display: block;
+}
+
+/* Intérêts */
+.cv-interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.cv-interest-tag {
+    background: #d4d0c8;
+    border: 1px solid #808080;
+    font-size: 10px;
+    padding: 2px 6px;
+    font-weight: normal;
+}
+
+/* Timeline expé/formation */
+.cv-timeline-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+}
+
+.cv-timeline-date {
+    width: 78px;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: #fff;
+    background: #4a4a4a;
+    padding: 4px 6px;
+    text-align: center;
+    line-height: 1.5;
+    align-self: flex-start;
+}
+
+.cv-timeline-content {
+    flex: 1;
+    border-left: 3px solid #d4d0c8;
+    padding-left: 10px;
+}
+
+.cv-timeline-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 3px;
+}
+
+.cv-timeline-sub {
+    font-size: 12px;
+    color: #000080;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.cv-timeline-desc {
+    font-size: 11px;
+    color: #444;
+    font-weight: normal;
+    line-height: 1.55;
+}
+
+/* Fenêtre CV plus large */
+.cv-window {
+    width: 700px;
+}
+
+@media (max-width: 720px) {
+    .cv-columns {
+        grid-template-columns: 1fr;
+    }
+    .cv-header {
+        margin: -12px -14px 10px;
+    }
+}
+
+/* ===================== MARQUEE Y2K ===================== */
+.marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    background: #000;
+    color: #0f0;
+    font-size: 11px;
+    padding: 4px 0;
+    border: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    margin-top: 12px;
+}
+
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left 18s linear infinite;
+}
+
+@keyframes scroll-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+}
+
+.blink {
+    animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* ===================== BARRE DES TÂCHES ===================== */
 .taskbar {
     background: #c0c0c0;
     position: fixed;
@@ -323,41 +698,59 @@ a:focus-visible {
     right: 0;
     height: 40px;
     border-top: 2px solid #fff;
+    box-shadow: 0 -1px 0 #808080;
     display: flex;
     align-items: center;
-    padding: 2px 6px;
-    justify-content: space-between;
-    z-index: 999;
-    gap: 8px;
+    padding: 2px 4px;
+    z-index: 9999;
+    gap: 4px;
+}
+
+.taskbar-separator {
+    width: 2px;
+    height: 28px;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #fff;
+    flex-shrink: 0;
+    margin: 0 2px;
 }
 
 .start-button {
     background: #c0c0c0;
     border: 2px solid;
     border-color: #fff #5a5a5a #5a5a5a #fff;
-    padding: 2px 10px;
+    padding: 1px 8px;
     font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 5px;
-    font-size: 14px;
+    gap: 4px;
+    font-size: 13px;
     color: #000;
-    height: calc(100% - 4px);
-}
-.start-button > span {
-    height: inherit;
-}
-span > img {
-    height : inherit;
+    height: calc(100% - 6px);
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
-.start-button:active {
+.start-button > span {
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.start-button > span img {
+    height: 20px;
+    width: 20px;
+    image-rendering: pixelated;
+}
+
+.start-button:active,
+.start-button.active {
     border-color: #5a5a5a #fff #fff #5a5a5a;
 }
 
 .taskbar-items {
     display: flex;
-    gap: 4px;
+    gap: 3px;
     flex: 1;
     overflow: hidden;
 }
@@ -366,18 +759,43 @@ span > img {
     background: #d4d0c8;
     border: 1px solid;
     border-color: #808080 #fff #fff #808080;
-    font-size: 12px;
+    font-size: 11px;
     padding: 2px 8px;
     color: #000;
     white-space: nowrap;
     max-width: 160px;
     overflow: hidden;
+    cursor: pointer;
+    height: calc(40px - 10px);
+    align-self: center;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.taskbar-item-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+}
+
+.taskbar-item span {
+    overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.taskbar-item:hover {
+    background: #e4e0d8;
 }
 
 .taskbar-item.minimized {
     border-color: #5a5a5a #fff #fff #5a5a5a;
-    background: #b8b8b8;
+    background: #b8b4ac;
     font-style: italic;
 }
 
@@ -386,89 +804,663 @@ span > img {
 }
 
 .clock {
-    border: 2px solid;
+    border: 1px solid;
     border-color: #808080 #fff #fff #808080;
-    padding: 2px 8px;
+    padding: 3px 8px;
     font-size: 12px;
     background: #c0c0c0;
     flex-shrink: 0;
-}
-
-/* --- BLINK & MARQUEE Y2K --- */
-.blink {
-    animation: blink 1s steps(1) infinite;
-}
-@keyframes blink {
-    50% { opacity: 0; }
-}
-
-.marquee {
-    overflow: hidden;
+    cursor: pointer;
     white-space: nowrap;
-    background: #000;
-    color: #0f0;
-    font-size: 12px;
-    padding: 4px 0;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ===================== MENU DÉMARRER ===================== */
+.start-menu {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    width: 220px;
+    background: #c0c0c0;
     border: 2px solid;
-    border-color: #808080 #fff #fff #808080;
-    margin-top: 10px;
+    border-color: #fff #808080 #808080 #fff;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.4);
+    z-index: 99999;
+    display: flex;
 }
 
-.marquee span {
-    display: inline-block;
-    padding-left: 100%;
-    animation: scroll-left 15s linear infinite;
+.start-menu[hidden] {
+    display: none;
 }
 
-@keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
+.start-menu-sidebar {
+    background: linear-gradient(180deg, #000080, #1084d0);
+    color: #fff;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 14px;
+    padding: 12px 6px;
+    display: flex;
+    gap: 2px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
 }
 
-.visit-counter {
-    display: inline-flex;
-    background: #000;
-    color: #0f0;
-    font-family: "Courier New", monospace;
-    border: 2px inset #808080;
-    padding: 3px 6px;
-    letter-spacing: 2px;
+.start-menu-list {
+    list-style: none;
+    flex: 1;
+    padding: 4px 0;
+}
+
+.start-menu-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
     font-size: 13px;
-    margin-top: 8px;
+    cursor: pointer;
 }
 
-hr.dotted {
-    border: none;
-    border-top: 2px dotted #808080;
-    margin: 14px 0;
+.start-menu-list li:hover {
+    background: #000080;
+    color: #fff;
 }
 
-/* --- RESPONSIVE --- */
+.start-menu-list li img {
+    width: 20px;
+    height: 20px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+}
+
+/* ===================== ÉCRAN DE DÉMARRAGE ===================== */
+.boot-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+}
+
+.boot-screen.boot-done {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.boot-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    color: #fff;
+}
+
+.boot-logo-img {
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+}
+
+.boot-title {
+    font-size: 32px;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.boot-title span {
+    color: #1084d0;
+}
+
+.boot-title small {
+    font-size: 16px;
+    color: #808080;
+    vertical-align: super;
+}
+
+.boot-bar-track {
+    width: 260px;
+    height: 16px;
+    border: 2px solid #808080;
+    background: #111;
+    overflow: hidden;
+}
+
+.boot-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #000080, #1084d0);
+    transition: width 0.1s linear;
+}
+
+.boot-hint {
+    font-size: 11px;
+    color: #666;
+    font-weight: normal;
+    font-family: "Courier New", monospace;
+}
+
+/* ===================== OVERLAY CRT ===================== */
+.crt-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99998;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.04) 2px,
+        rgba(0, 0, 0, 0.04) 4px
+    );
+}
+
+/* ===================== RESPONSIVE ===================== */
 @media (max-width: 600px) {
     .desktop {
-        padding: 12px;
-        gap: 16px;
+        padding: 10px 8px;
+        gap: 12px;
     }
 
     .window {
-        max-width: 100%;
+        width: calc(100vw - 10px) !important;
+        left: 5px !important;
     }
 
-    .title-bar-text {
-        font-size: 11px;
-    }
+    .title-bar-text { font-size: 11px; }
 
-    .window-body h1 {
-        font-size: 17px;
-    }
+    .window-body h1 { font-size: 16px; }
 
-    .taskbar-items {
-        gap: 2px;
-    }
+    .taskbar-items { gap: 2px; }
+
+    .start-menu { width: 190px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .blink, .marquee span {
+    .blink, .marquee span, .window-opening, .window-closing, .skill-fill, .boot-bar {
         animation: none;
+        transition: none;
     }
 }
+
+/* ===================== SCROLLBAR RÉTRO ===================== */
+::-webkit-scrollbar { width: 16px; height: 16px; }
+::-webkit-scrollbar-track { background: #c0c0c0; }
+::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    min-height: 20px;
+}
+::-webkit-scrollbar-button {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    height: 16px;
+}
+
+/* ===================== FENÊTRE EXPLORATEUR ===================== */
+.explorer-window {
+    width: 720px;
+}
+
+.explorer-window .window-body {
+    padding: 0;
+    max-height: 70vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.explorer-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-size: 12px;
+    background: #c0c0c0;
+}
+
+/* Barre d'outils */
+.explorer-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px 4px;
+    border-bottom: 1px solid #808080;
+    flex-shrink: 0;
+}
+
+.explorer-btn {
+    background: #c0c0c0;
+    border: 1px solid transparent;
+    padding: 2px 6px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #000;
+    line-height: 1;
+}
+
+.explorer-btn:hover:not(:disabled) {
+    border-color: #000080;
+    background: #d4d0c8;
+}
+
+.explorer-btn:active:not(:disabled) {
+    border-color: #808080;
+}
+
+.explorer-btn.active {
+    border: 1px solid;
+    border-color: #808080 #fff #fff #808080;
+    background: #b8b4ac;
+}
+
+.explorer-btn:disabled {
+    color: #808080;
+    cursor: default;
+}
+
+.explorer-toolbar-sep {
+    width: 1px;
+    height: 20px;
+    background: #808080;
+    margin: 0 3px;
+    flex-shrink: 0;
+}
+
+/* Barre d'adresse */
+.explorer-address-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 4px;
+    border-bottom: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    flex-shrink: 0;
+}
+
+.explorer-address-label {
+    font-size: 11px;
+    white-space: nowrap;
+    color: #333;
+}
+
+.explorer-address-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #fff;
+    border: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    padding: 1px 5px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.explorer-address-input img {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+}
+
+.explorer-go-btn {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #5a5a5a #5a5a5a #fff;
+    padding: 1px 8px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* Corps principal */
+.explorer-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Arbre gauche */
+.explorer-tree {
+    width: 180px;
+    min-width: 100px;
+    flex-shrink: 0;
+    border-right: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+    padding: 4px 0;
+    font-size: 11px;
+}
+
+.tree-item {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.tree-item:hover     { background: #000080; color: #fff; }
+.tree-item.selected  { background: #000080; color: #fff; }
+
+.tree-item img {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+}
+
+.tree-toggle {
+    width: 12px;
+    font-size: 9px;
+    flex-shrink: 0;
+    color: #808080;
+}
+
+.tree-item.selected .tree-toggle { color: #ccc; }
+.tree-item:hover .tree-toggle    { color: #ccc; }
+
+.tree-indent  { padding-left: 14px; }
+.tree-indent2 { padding-left: 26px; }
+.tree-indent3 { padding-left: 38px; }
+.tree-indent4 { padding-left: 50px; }
+
+/* Séparateur */
+.explorer-divider {
+    width: 4px;
+    background: #c0c0c0;
+    cursor: col-resize;
+    flex-shrink: 0;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #fff;
+}
+
+/* Panneau contenu */
+.explorer-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow: hidden;
+}
+
+.exp-view {
+    display: none;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.exp-view.active {
+    display: flex;
+}
+
+/* Vue grandes icônes */
+.exp-view-icons {
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 8px;
+    padding: 12px;
+}
+
+.exp-folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 76px;
+    padding: 6px 4px;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid transparent;
+    gap: 4px;
+    user-select: none;
+}
+
+.exp-folder-item img {
+    width: 36px;
+    height: 36px;
+    image-rendering: pixelated;
+}
+
+.exp-folder-item span {
+    font-size: 11px;
+    word-break: break-word;
+    line-height: 1.2;
+    color: #000;
+}
+
+.exp-folder-item:hover {
+    background: rgba(0, 0, 128, 0.1);
+    border-color: #000080;
+}
+
+.exp-folder-item.selected {
+    background: #000080;
+    border-color: #000080;
+}
+
+.exp-folder-item.selected span { color: #fff; }
+
+/* Vue liste */
+.exp-view-list {
+    flex-direction: column;
+    align-content: flex-start;
+    padding: 4px;
+    gap: 1px;
+}
+
+.exp-list-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.exp-list-item img {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+}
+
+.exp-list-item:hover   { background: #000080; color: #fff; }
+.exp-list-item.selected { background: #000080; color: #fff; }
+
+/* Vue détails */
+.exp-view-detail {
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.exp-view-detail.active {
+    display: flex;
+}
+
+.exp-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.exp-detail-table thead th {
+    background: #d4d0c8;
+    border: 1px solid #808080;
+    padding: 2px 8px;
+    text-align: left;
+    font-size: 11px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.exp-detail-table tbody tr {
+    cursor: pointer;
+}
+
+.exp-detail-table tbody tr:hover   { background: #000080; color: #fff; }
+.exp-detail-table tbody tr.selected { background: #000080; color: #fff; }
+
+.exp-detail-table td {
+    padding: 3px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    white-space: nowrap;
+    display: table-cell;
+}
+
+.exp-detail-table td img {
+    width: 14px;
+    height: 14px;
+    image-rendering: pixelated;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+/* Panneau infos projet (bas) */
+.exp-detail-panel {
+    border-top: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    background: #f0f0f0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 10px;
+    flex-shrink: 0;
+}
+
+.exp-detail-panel[hidden] { display: none; }
+
+.exp-detail-icon img {
+    width: 40px;
+    height: 40px;
+    image-rendering: pixelated;
+}
+
+.exp-detail-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.exp-detail-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #000080;
+}
+
+.exp-detail-desc {
+    font-size: 11px;
+    font-weight: normal;
+    color: #333;
+    line-height: 1.4;
+}
+
+.exp-detail-badges {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.exp-detail-badges .badge {
+    background: #000080;
+    color: #fff;
+    font-size: 10px;
+    padding: 1px 5px;
+    border: 1px solid #0000aa;
+}
+
+.exp-detail-link {
+    font-size: 11px;
+    align-self: flex-start;
+    margin-top: 2px;
+}
+
+/* Barre de statut */
+.explorer-status {
+    border-top: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    padding: 2px 8px;
+    font-size: 11px;
+    background: #c0c0c0;
+    flex-shrink: 0;
+    color: #333;
+}
+
+/* ===================== FENÊTRES PROJET ===================== */
+.proj-win {
+    padding: 4px 0;
+}
+
+.proj-win-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.proj-win-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+}
+
+.proj-win-sub {
+    font-size: 11px;
+    color: #555;
+    font-weight: normal;
+    margin-top: 2px;
+}
+
+.proj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.badge {
+    background: #000080;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 6px;
+    border: 1px solid #00006a;
+    font-weight: normal;
+}
+
+.proj-status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.proj-status {
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border: 1px solid;
+}
+
+.proj-status-done {
+    background: #d4edda;
+    color: #155724;
+    border-color: #155724;
+}
+
+.proj-status-wip {
+    background: #fff3cd;
+    color: #856404;
+    border-color: #856404;
+}
+

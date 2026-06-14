@@ -1,48 +1,311 @@
-<h1>Mes projets</h1>
-<div class="projects-grid">
-    <div class="project-card">
-        <h3><span aria-hidden="true">💾</span> Retro-Shop</h3>
-        <p>Boutique en ligne au look Windows 98, panier dynamique et paiement simulé.</p>
-        <div class="badge-row">
-            <span class="badge">React</span>
-            <span class="badge">Node.js</span>
-            <span class="badge">CSS3</span>
-        </div>
-        <a class="btn-95" href="javascript:void(0)" aria-disabled="true">Voir le projet</a>
+<div class="explorer-root">
+
+    <!-- BARRE D'OUTILS -->
+    <div class="explorer-toolbar">
+        <button class="explorer-btn" title="Précédent" disabled>◄</button>
+        <button class="explorer-btn" title="Suivant" disabled>►</button>
+        <button class="explorer-btn" title="Dossier parent" id="exp-up-btn">▲</button>
+        <div class="explorer-toolbar-sep"></div>
+        <button class="explorer-btn" title="Couper" disabled>✂</button>
+        <button class="explorer-btn" title="Copier" disabled>⧉</button>
+        <button class="explorer-btn" title="Coller" disabled>📋</button>
+        <div class="explorer-toolbar-sep"></div>
+        <button class="explorer-btn" title="Supprimer" disabled>🗑</button>
+        <button class="explorer-btn" title="Propriétés" id="exp-props-btn">ℹ</button>
+        <div class="explorer-toolbar-sep"></div>
+        <button class="explorer-btn exp-view-btn active" data-view="icons"  title="Grandes icônes">⊞</button>
+        <button class="explorer-btn exp-view-btn"        data-view="list"   title="Liste">☰</button>
+        <button class="explorer-btn exp-view-btn"        data-view="detail" title="Détails">≡</button>
     </div>
 
-    <div class="project-card">
-        <h3><span aria-hidden="true">🖴</span> PixelTracker</h3>
-        <p>Application de suivi de tâches façon explorateur de fichiers, drag & drop inclus.</p>
-        <div class="badge-row">
-            <span class="badge">JavaScript</span>
-            <span class="badge">LocalStorage</span>
+    <!-- BARRE D'ADRESSE -->
+    <div class="explorer-address-bar">
+        <span class="explorer-address-label">Adresse</span>
+        <div class="explorer-address-input" id="exp-address">
+            <img src="./assets/icons/directory_open.png" alt="" aria-hidden="true">
+            <span id="exp-address-text">C:\PROJETS\</span>
         </div>
-        <a class="btn-95" href="javascript:void(0)" aria-disabled="true">Voir le projet</a>
+        <button class="explorer-go-btn">OK</button>
     </div>
 
-    <div class="project-card">
-        <h3><span aria-hidden="true">📼</span> WebRing 2K</h3>
-        <p>Un annuaire communautaire inspiré des webrings, pour relier des sites perso rétro.</p>
-        <div class="badge-row">
-            <span class="badge">HTML5</span>
-            <span class="badge">PHP</span>
-            <span class="badge">MySQL</span>
+    <!-- CORPS : ARBRE + CONTENU -->
+    <div class="explorer-body">
+
+        <!-- PANNEAU GAUCHE : ARBRE -->
+        <div class="explorer-tree" id="exp-tree">
+            <div class="tree-item" data-target="root" id="tree-root">
+                <span class="tree-toggle expanded">▼</span>
+                <img src="./assets/icons/directory_open.png" alt="">
+                <span>Bureau</span>
+            </div>
+            <div class="tree-children" id="tree-root-children">
+                <div class="tree-item tree-indent" data-target="mypc">
+                    <span class="tree-toggle expanded">▼</span>
+                    <img src="./assets/icons/directory_open.png" alt="">
+                    <span>Mon Ordinateur</span>
+                </div>
+                <div class="tree-children" id="tree-mypc-children">
+                    <div class="tree-item tree-indent2" data-target="cdrive">
+                        <span class="tree-toggle expanded">▼</span>
+                        <img src="./assets/icons/directory_open.png" alt="">
+                        <span>Disque local (C:)</span>
+                    </div>
+                    <div class="tree-children" id="tree-cdrive-children">
+                        <div class="tree-item tree-indent3 selected" data-target="projets">
+                            <span class="tree-toggle expanded">▼</span>
+                            <img src="./assets/icons/directory_open.png" alt="">
+                            <span>PROJETS</span>
+                        </div>
+                        <div class="tree-children" id="tree-projets-children">
+                            <div class="tree-item tree-indent4 tree-leaf" data-target="proj-photo">
+                                <span class="tree-toggle">○</span>
+                                <img src="./assets/icons/xml.png" alt="">
+                                <span>PORTFOLIO.EXE</span>
+                            </div>
+                            <div class="tree-item tree-indent4 tree-leaf" data-target="proj-abalone">
+                                <span class="tree-toggle">○</span>
+                                <img src="./assets/icons/xml.png" alt="">
+                                <span>ABALONE.EXE</span>
+                            </div>
+                            <div class="tree-item tree-indent4 tree-leaf" data-target="proj-tower">
+                                <span class="tree-toggle">○</span>
+                                <img src="./assets/icons/xml.png" alt="">
+                                <span>TOWER.EXE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <a class="btn-95" href="javascript:void(0)" aria-disabled="true">Voir le projet</a>
+
+        <!-- SÉPARATEUR REDIMENSIONNABLE -->
+        <div class="explorer-divider" id="exp-divider"></div>
+
+        <!-- PANNEAU DROIT : CONTENU -->
+        <div class="explorer-content" id="exp-content">
+
+            <!-- VUE ICONES -->
+            <div class="exp-view exp-view-icons active" id="view-projets">
+                <div class="exp-folder-item" data-proj="proj-photo">
+                    <img src="./assets/icons/xml.png" alt="PORTFOLIO.EXE">
+                    <span>PORTFOLIO.EXE</span>
+                </div>
+                <div class="exp-folder-item" data-proj="proj-abalone">
+                    <img src="./assets/icons/xml.png" alt="ABALONE.EXE">
+                    <span>ABALONE.EXE</span>
+                </div>
+                <div class="exp-folder-item" data-proj="proj-tower">
+                    <img src="./assets/icons/xml.png" alt="TOWER.EXE">
+                    <span>TOWER.EXE</span>
+                </div>
+            </div>
+
+            <!-- VUE LISTE -->
+            <div class="exp-view exp-view-list" id="view-projets-list">
+                <div class="exp-list-item" data-proj="proj-photo">
+                    <img src="./assets/icons/xml.png" alt=""> PORTFOLIO.EXE
+                </div>
+                <div class="exp-list-item" data-proj="proj-abalone">
+                    <img src="./assets/icons/xml.png" alt=""> ABALONE.EXE
+                </div>
+                <div class="exp-list-item" data-proj="proj-tower">
+                    <img src="./assets/icons/xml.png" alt=""> TOWER.EXE
+                </div>
+            </div>
+
+            <!-- VUE DÉTAILS -->
+            <div class="exp-view exp-view-detail" id="view-projets-detail">
+                <table class="exp-detail-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Type</th>
+                            <th>Technologies</th>
+                            <th>Modifié le</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-proj="proj-photo">
+                            <td><img src="./assets/icons/xml.png" alt=""> PORTFOLIO.EXE</td>
+                            <td>Application Win32</td>
+                            <td>HTML · CSS · JavaScript</td>
+                            <td>14/06/2026</td>
+                        </tr>
+                        <tr data-proj="proj-abalone">
+                            <td><img src="./assets/icons/xml.png" alt=""> ABALONE.EXE</td>
+                            <td>Application Win32</td>
+                            <td>Python</td>
+                            <td>14/06/2026</td>
+                        </tr>
+                        <tr data-proj="proj-tower">
+                            <td><img src="./assets/icons/xml.png" alt=""> TOWER.EXE</td>
+                            <td>Application Win32</td>
+                            <td>Java · Swing</td>
+                            <td>14/06/2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PANNEAU DÉTAIL PROJET -->
+            <div class="exp-detail-panel" id="exp-detail-panel" hidden>
+                <div class="exp-detail-icon">
+                    <img src="./assets/icons/xml.png" alt="" id="exp-detail-img">
+                </div>
+                <div class="exp-detail-info">
+                    <div class="exp-detail-title" id="exp-detail-title">Nom du projet</div>
+                    <div class="exp-detail-desc"  id="exp-detail-desc">Description</div>
+                    <div class="exp-detail-badges" id="exp-detail-badges"></div>
+                    <button class="btn-95 exp-detail-link" id="exp-detail-open">
+                        Ouvrir
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="project-card">
-        <h3><span aria-hidden="true">🕹️</span> ASCII Arcade</h3>
-        <p>Mini-jeux jouables au clavier, rendus entièrement en caractères ASCII.</p>
-        <div class="badge-row">
-            <span class="badge">Canvas</span>
-            <span class="badge">JavaScript</span>
-        </div>
-        <a class="btn-95" href="javascript:void(0)" aria-disabled="true">Voir le projet</a>
+    <!-- BARRE DE STATUT -->
+    <div class="explorer-status" id="exp-status">
+        3 objet(s) — C:\PROJETS\
     </div>
+
 </div>
 
-<div class="marquee" aria-hidden="true">
-    <span>*** MERCI DE VISITER MON SITE *** N'OUBLIEZ PAS DE SIGNER LE LIVRE D'OR *** OPTIMISÉ POUR 800x600 *** BEST VIEWED WITH NETSCAPE NAVIGATOR ***&nbsp;&nbsp;&nbsp;&nbsp;</span>
-</div>
+<script>
+(function() {
+    const PROJECTS = {
+        'proj-photo': {
+            title: 'PORTFOLIO.EXE',
+            desc: 'Site de portfolio photographique personnel avec galerie interactive.',
+            tags: ['HTML', 'CSS', 'JavaScript'],
+            windowId: 'win-proj-photo',
+            path: 'C:\\PROJETS\\PORTFOLIO.EXE'
+        },
+        'proj-abalone': {
+            title: 'ABALONE.EXE',
+            desc: 'Jeu de plateau Abalone jouable en ligne de commande, deux joueurs.',
+            tags: ['Python'],
+            windowId: 'win-proj-abalone',
+            path: 'C:\\PROJETS\\ABALONE.EXE'
+        },
+        'proj-tower': {
+            title: 'TOWER.EXE',
+            desc: 'Jeu Tower Defense avec vagues d\'ennemis et tours défensives, en Java.',
+            tags: ['Java', 'Swing'],
+            windowId: 'win-proj-tower',
+            path: 'C:\\PROJETS\\TOWER.EXE'
+        }
+    };
+
+    let currentView = 'icons';
+    let selectedProj = null;
+
+    function openProject(projId) {
+        const proj = PROJECTS[projId];
+        if (proj && typeof window.openWindow === 'function') {
+            window.openWindow(proj.windowId);
+        }
+    }
+
+    function selectProject(projId) {
+        selectedProj = projId;
+        const proj = PROJECTS[projId];
+
+        document.querySelectorAll('.exp-folder-item, .exp-list-item, .exp-detail-table tr[data-proj]')
+            .forEach(el => el.classList.remove('selected'));
+        document.querySelectorAll(`[data-proj="${projId}"]`).forEach(el => el.classList.add('selected'));
+
+        document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('selected'));
+        const treeEl = document.querySelector(`[data-target="${projId}"]`);
+        if (treeEl) treeEl.classList.add('selected');
+
+        document.getElementById('exp-address-text').textContent = proj.path;
+        document.getElementById('exp-status').textContent = `1 objet sélectionné — ${proj.path}`;
+
+        const panel = document.getElementById('exp-detail-panel');
+        document.getElementById('exp-detail-title').textContent = proj.title;
+        document.getElementById('exp-detail-desc').textContent  = proj.desc;
+        document.getElementById('exp-detail-badges').innerHTML  =
+            proj.tags.map(t => `<span class="badge">${t}</span>`).join('');
+        panel.hidden = false;
+
+        document.getElementById('exp-detail-open').onclick = () => openProject(projId);
+    }
+
+    function resetSelection() {
+        selectedProj = null;
+        document.querySelectorAll('[data-proj]').forEach(e => e.classList.remove('selected'));
+        document.getElementById('exp-detail-panel').hidden = true;
+        document.getElementById('exp-address-text').textContent = 'C:\\PROJETS\\';
+        document.getElementById('exp-status').textContent = '3 objet(s) — C:\\PROJETS\\';
+    }
+
+    // Clic simple = sélectionner, double-clic = ouvrir
+    document.querySelectorAll('.exp-folder-item, .exp-list-item').forEach(el => {
+        let lastClick = 0;
+        el.addEventListener('click', () => {
+            const projId = el.dataset.proj;
+            if (!projId) return;
+            const now = Date.now();
+            if (now - lastClick < 400 && selectedProj === projId) {
+                openProject(projId);
+            } else if (selectedProj === projId) {
+                resetSelection();
+            } else {
+                selectProject(projId);
+            }
+            lastClick = now;
+        });
+    });
+
+    document.querySelectorAll('.exp-detail-table tr[data-proj]').forEach(el => {
+        let lastClick = 0;
+        el.addEventListener('click', () => {
+            const projId = el.dataset.proj;
+            if (!projId) return;
+            const now = Date.now();
+            if (now - lastClick < 400 && selectedProj === projId) {
+                openProject(projId);
+            } else {
+                selectProject(projId);
+            }
+            lastClick = now;
+        });
+    });
+
+    document.querySelectorAll('.tree-item').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.tree-item').forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+            const target = item.dataset.target;
+            if (PROJECTS[target]) {
+                selectProject(target);
+            } else if (target === 'projets') {
+                resetSelection();
+            }
+        });
+    });
+
+    document.getElementById('exp-up-btn').addEventListener('click', () => {
+        resetSelection();
+        const projetsTree = document.querySelector('[data-target="projets"]');
+        if (projetsTree) {
+            document.querySelectorAll('.tree-item').forEach(i => i.classList.remove('selected'));
+            projetsTree.classList.add('selected');
+        }
+    });
+
+    document.querySelectorAll('.exp-view-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.exp-view-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentView = btn.dataset.view;
+            document.querySelectorAll('.exp-view').forEach(v => v.classList.remove('active'));
+            const activeView = document.getElementById(`view-projets${currentView === 'icons' ? '' : '-' + currentView}`);
+            if (activeView) activeView.classList.add('active');
+            else document.getElementById('view-projets').classList.add('active');
+        });
+    });
+
+})();
+</script>

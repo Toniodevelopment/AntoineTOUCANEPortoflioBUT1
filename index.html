@@ -3,31 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Portfolio Y2K _</title>
+    <meta name="description" content="Portfolio d'Antoine Toucane — Développeur Web, esthétique Y2K / Windows 98">
+    <title>Antoine Toucane — Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="desktop" id="desktop">
-        <!-- Raccourcis ajoutés par script.js -->
-    
+    <!-- ÉCRAN DE DÉMARRAGE -->
+    <div class="boot-screen" id="boot-screen" aria-hidden="true">
+        <div class="boot-content">
+            <img src="./assets/icons/windows_demarer.png" alt="" class="boot-logo-img">
+            <div class="boot-title">Antoine<span>OS</span> <small>98</small></div>
+            <div class="boot-bar-track">
+                <div class="boot-bar" id="boot-bar"></div>
+            </div>
+            <p class="boot-hint">Chargement de l'environnement…</p>
+        </div>
+    </div>
 
-        <!-- Les fenêtres sont injectées ici par script.js -->
+    <!-- BUREAU -->
+    <div class="desktop" id="desktop"></div>
+
+    <!-- MENU DÉMARRER -->
+    <div class="start-menu" id="start-menu" hidden>
+        <div class="start-menu-sidebar">
+            <span>Antoine</span>
+            <span>Toucane</span>
+        </div>
+        <ul class="start-menu-list" id="start-menu-list">
+            <li data-open="win-cv">
+                <img src="./assets/icons/xml.png" alt=""> Mon CV
+            </li>
+            <li data-open="win-projets">
+                <img src="./assets/icons/directory_closed.png" alt=""> Mes Projets
+            </li>
+            <li data-open="win-contact">
+                <img src="./assets/icons/outlook.png" alt=""> Me contacter
+            </li>
+            <li data-open="win-liens">
+                <img src="./assets/icons/internet_explorer.png" alt=""> Mes liens
+            </li>
+        </ul>
     </div>
 
     <!-- BARRE DES TACHES -->
     <div class="taskbar">
-        <button class="start-button" data-scroll-to="win-cv">
-            <span aria-hidden="true"> <img src="./assets/icons/windows_demarer.png" alt="Démarrer"></span> <strong>Démarrer</strong>
+        <button class="start-button" id="start-btn">
+            <span aria-hidden="true"><img src="./assets/icons/windows_demarer.png" alt="Démarrer"></span>
+            <strong>Démarrer</strong>
         </button>
-        <div class="taskbar-items" id="taskbar-items">
-            <!-- Les items sont injectés par script.js -->
-        </div>
-        <div class="clock" id="retro-clock">19:00</div>
+        <div class="taskbar-separator"></div>
+        <div class="taskbar-items" id="taskbar-items"></div>
+        <div class="clock" id="retro-clock" title="Cliquez pour afficher la date">19:00</div>
     </div>
 
+    <!-- OVERLAY CRT (décoration) -->
+    <div class="crt-overlay" aria-hidden="true"></div>
+
     <script type="module" src="script.js"></script>
-    <script type="module" src="RetroWindow.js"></script>
-    <script type="module" src="Icons.js"></script>
 </body>
 </html>
