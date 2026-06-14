@@ -30,6 +30,8 @@ export class RetroWindow {
         // --- Fenêtre ---
         const win = document.createElement('div');
         win.className = `window ${this.extraClass}`.trim();
+        
+        
         win.id = this.id;
 
         win.innerHTML = `
@@ -47,6 +49,20 @@ export class RetroWindow {
         `;
 
         desktop.appendChild(win);
+        try {
+            var old_top = document.getElementById(this.id).getStyle('top');
+            var old_left = document.getElementById(this.id).getStyle('left');
+            document.getElementById(this.id).remove();
+            win.style.top  = old_top;
+            win.style.left = old_left;
+
+        } catch (e) {
+            win.style.top  = (Math.random() * (desktop.clientHeight / 10 )) + 'px';
+            win.style.left = (Math.random() * (desktop.clientWidth  / 10)) + 'px';
+        }
+        win.style.maxHeight = (desktop.clientHeight - win.style.top.replace('px', '') - desktop.clientHeight/10) + 'px';
+        win.style.maxWidth  = (desktop.clientWidth  - win.style.left.replace('px', '') - desktop.clientWidth/10) + 'px';
+        console.log(desktop.clientHeight, desktop.clientWidth, win.style.top, win.style.left);
         this.el = win;
         this.bodyEl = win.querySelector('.window-body');
 
@@ -98,6 +114,8 @@ export class RetroWindow {
     close() {
         this.el.classList.add('closed');
         this.taskItem.classList.add('closed');
+        this.getParent().removeChildById(this.id);
+        this.getParent().removeChildById(this.taskItem.id);
     }
 
     /** Restaure (réaffiche, déminimise, remet au premier plan, scroll vers elle). */

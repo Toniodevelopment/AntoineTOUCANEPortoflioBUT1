@@ -30,17 +30,23 @@ const ICON_CONFIGS = [
 const desktop = document.getElementById('desktop');
 const taskbarItems = document.getElementById('taskbar-items');
 
+const windows = new Map();
+
 ICON_CONFIGS.forEach(config => {
     new Icons(config).mount(desktop, taskbarItems);
+    document.getElementById(config.id).addEventListener('dblclick', () => {
+        const win = windows.get(config.linkedWindow);
+        if (win) win.mount(desktop, taskbarItems);
+    });
 });
 
 // --- GESTION DES FENETRES ---
 
 // --- INITIALISATION ---
-const windows = new Map();
+
 
 WINDOW_CONFIGS.forEach(config => {
-    const win = new RetroWindow(config).mount(desktop, taskbarItems);
+    const win = new RetroWindow(config);
     windows.set(config.id, win);
 });
 
