@@ -251,8 +251,16 @@ body {
     font-size: 12px;
 }
 
+.fieldset ul {    
+    list-style-position: inside;
+}
+
 .fieldset-flat {
     min-height: auto;
+}
+
+.descImg {
+    width: 100%;
 }
 
 /* ===================== BARRES DE COMPÉTENCES ===================== */
