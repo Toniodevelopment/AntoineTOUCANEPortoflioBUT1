@@ -1,6 +1,6 @@
 export class RetroWindow {
     static zCounter = 100;
-    static cascadeIndex = 0;
+    static cascadeIndex = 1;
     static activeWindow = null;
 
     constructor({ id, title, contentUrl, iconUrl = '', extraClass = '' }) {

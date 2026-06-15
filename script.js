@@ -151,7 +151,6 @@ const bootInterval = setInterval(() => {
             bootScreen.classList.add('boot-done');
             setTimeout(() => {
                 bootScreen.remove();
-                windows.get('win-cv').mount(desktop, taskbarItems);
             }, 400);
         }, 200);
     }

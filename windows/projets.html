@@ -60,7 +60,7 @@
                             <div class="tree-item tree-indent4 tree-leaf" data-target="proj-photo">
                                 <span class="tree-toggle">○</span>
                                 <img src="./assets/icons/xml.png" alt="">
-                                <span>PORTFOLIO.EXE</span>
+                                <span>PORTFOLIO_PHOTO.EXE</span>
                             </div>
                             <div class="tree-item tree-indent4 tree-leaf" data-target="proj-abalone">
                                 <span class="tree-toggle">○</span>
@@ -70,7 +70,7 @@
                             <div class="tree-item tree-indent4 tree-leaf" data-target="proj-tower">
                                 <span class="tree-toggle">○</span>
                                 <img src="./assets/icons/xml.png" alt="">
-                                <span>TOWER.EXE</span>
+                                <span>TOWER_DEFENSE.EXE</span>
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
             <div class="exp-view exp-view-icons active" id="view-projets">
                 <div class="exp-folder-item" data-proj="proj-photo">
                     <img src="./assets/icons/xml.png" alt="PORTFOLIO.EXE">
-                    <span>PORTFOLIO.EXE</span>
+                    <span>PORTFOLIO_PHOTO.EXE</span>
                 </div>
                 <div class="exp-folder-item" data-proj="proj-abalone">
                     <img src="./assets/icons/xml.png" alt="ABALONE.EXE">
@@ -96,20 +96,20 @@
                 </div>
                 <div class="exp-folder-item" data-proj="proj-tower">
                     <img src="./assets/icons/xml.png" alt="TOWER.EXE">
-                    <span>TOWER.EXE</span>
+                    <span>TOWER_DEFENSE.EXE</span>
                 </div>
             </div>
 
             <!-- VUE LISTE -->
             <div class="exp-view exp-view-list" id="view-projets-list">
                 <div class="exp-list-item" data-proj="proj-photo">
-                    <img src="./assets/icons/xml.png" alt=""> PORTFOLIO.EXE
+                    <img src="./assets/icons/xml.png" alt=""> PORTFOLIO_PHOTO.EXE
                 </div>
                 <div class="exp-list-item" data-proj="proj-abalone">
                     <img src="./assets/icons/xml.png" alt=""> ABALONE.EXE
                 </div>
                 <div class="exp-list-item" data-proj="proj-tower">
-                    <img src="./assets/icons/xml.png" alt=""> TOWER.EXE
+                    <img src="./assets/icons/xml.png" alt=""> TOWER_DEFENSE.EXE
                 </div>
             </div>
 
@@ -126,7 +126,7 @@
                     </thead>
                     <tbody>
                         <tr data-proj="proj-photo">
-                            <td><img src="./assets/icons/xml.png" alt=""> PORTFOLIO.EXE</td>
+                            <td><img src="./assets/icons/xml.png" alt=""> PORTFOLIO_PHOTO.EXE</td>
                             <td>Application Win32</td>
                             <td>HTML · CSS · JavaScript</td>
                             <td>14/06/2026</td>
@@ -134,13 +134,13 @@
                         <tr data-proj="proj-abalone">
                             <td><img src="./assets/icons/xml.png" alt=""> ABALONE.EXE</td>
                             <td>Application Win32</td>
-                            <td>Python</td>
+                            <td>Java</td>
                             <td>14/06/2026</td>
                         </tr>
                         <tr data-proj="proj-tower">
                             <td><img src="./assets/icons/xml.png" alt=""> TOWER.EXE</td>
                             <td>Application Win32</td>
-                            <td>Java · Swing</td>
+                            <td>Java · JavaFx</td>
                             <td>14/06/2026</td>
                         </tr>
                     </tbody>
@@ -184,14 +184,14 @@
         'proj-abalone': {
             title: 'ABALONE.EXE',
             desc: 'Jeu de plateau Abalone jouable en ligne de commande, deux joueurs.',
-            tags: ['Python'],
+            tags: ['Java'],
             windowId: 'win-proj-abalone',
             path: 'C:\\PROJETS\\ABALONE.EXE'
         },
         'proj-tower': {
-            title: 'TOWER.EXE',
+            title: 'TOWER_DEFENSE.EXE',
             desc: 'Jeu Tower Defense avec vagues d\'ennemis et tours défensives, en Java.',
-            tags: ['Java', 'Swing'],
+            tags: ['Java', 'JavaFx'],
             windowId: 'win-proj-tower',
             path: 'C:\\PROJETS\\TOWER.EXE'
         }
@@ -210,7 +210,7 @@
     function selectProject(projId) {
         selectedProj = projId;
         const proj = PROJECTS[projId];
-
+        console.log("iheohiez");
         document.querySelectorAll('.exp-folder-item, .exp-list-item, .exp-detail-table tr[data-proj]')
             .forEach(el => el.classList.remove('selected'));
         document.querySelectorAll(`[data-proj="${projId}"]`).forEach(el => el.classList.add('selected'));
